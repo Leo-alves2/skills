@@ -1,61 +1,74 @@
-# Skills de continuidade para agentes de IA
+# Skills portáveis para agentes de IA
+
+Este repositório reúne skills no formato aberto [Agent Skills](https://agentskills.io/specification). Cada skill fica em sua própria pasta e contém um `SKILL.md` com metadados `name` e `description`.
+
+## Catálogo
 
 | Skill | Quando usar |
 | --- | --- |
-| [sync-session](skills/sync-session/SKILL.md) | Ao iniciar ou retomar desenvolvimento em um repositório. |
-| [safe-pause](skills/safe-pause/SKILL.md) | Ao encerrar, pedir uma pausa ou chegar a 10% restantes de uma cota aplicável. |
+| [sync-session](skills/sync-session/SKILL.md) | Ao iniciar ou retomar trabalho em um repositório após uma pausa ou outra sessão. |
+| [safe-pause](skills/safe-pause/SKILL.md) | Ao pedir uma pausa, encerrar uma sessão ou chegar a 10% restantes de uma cota aplicável. |
+| [orchestrate](skills/orchestrate/SKILL.md) | Para decidir se tarefas independentes se beneficiam de subagentes e integrar seus resultados. |
+| [computer-use](skills/computer-use/SKILL.md) | Para operar uma interface gráfica quando o harness atual oferece ferramentas de controle visual. |
+| [skill-authoring](skills/skill-authoring/SKILL.md) | Para criar ou revisar skills no formato Agent Skills. |
+| [skill-installation](skills/skill-installation/SKILL.md) | Para instalar, atualizar ou remover skills em um harness compatível. |
+| [harness-documentation](skills/harness-documentation/SKILL.md) | Para consultar documentação oficial atual sobre modelos, ferramentas e configuração de um harness. |
 
-As duas seguem a [especificação Agent Skills](https://agentskills.io/specification) e não dependem de um modelo ou provedor específico. A instalação depende do aplicativo que executa o modelo. As verificações de Git, gravação de arquivos e consulta de cotas dependem das ferramentas e permissões que esse aplicativo oferece.
+As skills de orquestração, computer use, autoria, instalação e consulta de documentação são adaptações portáveis das rotinas utilizadas no harness Codex. Não incluem comandos ou textos específicos de um fornecedor. `safe-pause` e `sync-session` são as skills de continuidade mantidas neste repositório. A skill `orchestrate` é uma reescrita independente, inspirada no caso de uso da [skill de Rafael Quintanilha](https://github.com/rafaelquintanilha/skills/tree/master/skills/orchestrate), que é voltada ao Codex e às ferramentas de colaboração dele.
 
-## Instalação em clientes compatíveis
+As instruções não dependem de um modelo específico. A execução de ações depende das ferramentas, permissões e políticas oferecidas pelo harness: por exemplo, uma skill de orquestração não cria ferramentas de subagentes, e `computer-use` exige um recurso de controle visual.
 
-Use o [CLI de skills](https://github.com/vercel-labs/skills) com Node.js 22.20 ou posterior:
+## Instalar em clientes compatíveis
+
+O [CLI `skills`](https://github.com/vercel-labs/skills) instala skills em vários agentes compatíveis. Ele exige Node.js e permite escolher os clientes de destino:
 
 ```sh
 npx skills add Leo-alves2/skills --list
-npx skills add Leo-alves2/skills --skill sync-session --skill safe-pause
+npx skills add Leo-alves2/skills --skill '*'
 ```
 
-Selecione o cliente no instalador. Rode na raiz do projeto para instalação local ou acrescente `-g` para instalar no escopo de usuário dos clientes selecionados. Se já houver uma cópia local personalizada, revise as diferenças antes de substituí-la.
+Rode o comando na raiz do projeto para instalar localmente ou acrescente `-g` para instalar no escopo do usuário. Consulte a lista atual de clientes aceitos pelo CLI; nem todo harness implementa todas as capacidades de cada skill. Se já existir uma cópia personalizada com o mesmo nome, revise as diferenças antes de substituí-la.
 
 ## Gemini CLI
 
-Use o [instalador nativo do Gemini CLI](https://geminicli.com/docs/cli/skills/#from-the-terminal):
+O instalador nativo permite escolher cada skill e o escopo `user` ou `workspace`. Por exemplo:
 
 ```sh
 gemini skills install https://github.com/Leo-alves2/skills.git --path skills/sync-session --scope user
 gemini skills install https://github.com/Leo-alves2/skills.git --path skills/safe-pause --scope user
+gemini skills install https://github.com/Leo-alves2/skills.git --path skills/orchestrate --scope user
+gemini skills install https://github.com/Leo-alves2/skills.git --path skills/computer-use --scope user
+gemini skills install https://github.com/Leo-alves2/skills.git --path skills/skill-authoring --scope user
+gemini skills install https://github.com/Leo-alves2/skills.git --path skills/skill-installation --scope user
+gemini skills install https://github.com/Leo-alves2/skills.git --path skills/harness-documentation --scope user
 gemini skills list
 ```
 
-Para limitar a instalação ao projeto atual, use `--scope workspace` na raiz do projeto. Em uma sessão aberta, use `/skills reload` e depois `/skills list`. Para orientar o uso por padrão, acrescente a regra da seção **Uso como padrão** ao `GEMINI.md` do projeto (ou a `~/.gemini/GEMINI.md` para todos os projetos do usuário).
-
-Se o comando `gemini` não estiver funcionando no terminal, também é possível copiar as skills para o projeto com o CLI de skills. Na raiz do projeto:
-
-```sh
-npx skills add Leo-alves2/skills --skill sync-session --skill safe-pause -a gemini-cli --copy
-```
-
-Essa opção instala os arquivos; a ativação ainda depende de uma sessão funcional do Gemini CLI.
+Use `--scope workspace` na raiz do projeto para restringir a instalação ao projeto. Em uma sessão aberta, recarregue as skills e confira a lista. Também é possível usar o CLI `skills` com `-a gemini-cli --copy`.
 
 ## Hermes Agent
 
-No perfil que você usa para desenvolvimento, utilize o [instalador nativo do Hermes](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills#installing-individual-skills-directly-without-adding-a-tap):
+O instalador nativo instala uma pasta por vez no perfil atual. Exemplo:
 
 ```sh
 hermes skills install Leo-alves2/skills/skills/sync-session
 hermes skills install Leo-alves2/skills/skills/safe-pause
+hermes skills install Leo-alves2/skills/skills/orchestrate
+hermes skills install Leo-alves2/skills/skills/computer-use
+hermes skills install Leo-alves2/skills/skills/skill-authoring
+hermes skills install Leo-alves2/skills/skills/skill-installation
+hermes skills install Leo-alves2/skills/skills/harness-documentation
 hermes skills list
 ```
 
 ## Instalação manual ou chat sem instalador
 
-Em um cliente com suporte a Agent Skills, copie as duas pastas em `skills/` para o diretório de skills reconhecido pelo cliente, preservando o nome de cada pasta e o respectivo `SKILL.md`. Em um chat sem suporte a skills, anexe ou cole o conteúdo dos dois arquivos e peça ao agente para segui-los. Essa alternativa vale como instrução da sessão; o chat pode não ter acesso a Git, arquivos ou cotas.
+Em um cliente compatível, copie as pastas escolhidas para o diretório de skills documentado pelo harness, preservando a pasta e o arquivo `SKILL.md`. Em um chat sem suporte a skills, anexe ou cole as instruções necessárias. Nesse caso, o agente pode não ter acesso a Git, arquivos, cotas, subagentes ou controle visual.
 
 ## Uso como padrão
 
-Após instalar, registre esta regra no arquivo de instruções do projeto ou nas preferências persistentes do cliente:
+Configure o harness para descobrir e ativar as skills instaladas conforme suas descrições. Para continuidade em projetos, registre também esta preferência nas instruções persistentes do cliente ou do repositório:
 
-> Aplique `sync-session` ao iniciar ou retomar trabalho no repositório, antes de editar arquivos. Aplique `safe-pause` quando eu pedir uma pausa, no encerramento planejado ou quando restarem 10% ou menos de uma cota que o ambiente consiga consultar. Preserve alterações locais e continue apenas dentro do escopo autorizado.
+> Aplique `sync-session` ao iniciar ou retomar trabalho no repositório, antes de editar arquivos. Aplique `safe-pause` quando eu pedir uma pausa, no encerramento planejado ou quando restarem 10% ou menos de uma cota que o ambiente consiga consultar. Use as demais skills quando a tarefa corresponder à descrição e o harness oferecer as capacidades necessárias. Preserve alterações locais e continue apenas dentro do escopo autorizado.
 
-No Hermes, você pode registrar essa preferência no perfil e abrir uma nova sessão. Use também `/sync-session` e `/safe-pause` quando a interface oferecer comandos de skill. A regra orienta a sessão ativa; ela não cria um monitor em segundo plano.
+Essa regra orienta as sessões em que for carregada; não cria monitoramento ou execução em segundo plano.
