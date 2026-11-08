@@ -65,6 +65,57 @@ hermes skills list
 
 Em um cliente compatível, copie as pastas escolhidas para o diretório de skills documentado pelo harness, preservando a pasta e o arquivo `SKILL.md`. Em um chat sem suporte a skills, anexe ou cole as instruções necessárias. Nesse caso, o agente pode não ter acesso a Git, arquivos, cotas, subagentes ou controle visual.
 
+## Coleções recomendadas e ecossistema
+
+Além das skills mantidas neste repositório, você pode instalar e integrar coleções complementares do ecossistema Agent Skills:
+
+### 1. [Matt Pocock Skills](https://github.com/mattpocock/skills)
+Coleção de 39 skills voltadas a boas práticas de engenharia de software, desenvolvimento guiado por testes (TDD), modelagem de domínio, code review e produtividade para agentes.
+
+- **Via CLI `skills`**:
+  ```sh
+  npx skills add mattpocock/skills
+  ```
+- **No Hermes Agent**:
+  ```sh
+  hermes skills install mattpocock/<skill-name>
+  ```
+- **No Antigravity / Gemini CLI**:
+  Declare no seu `~/.gemini/config/skills.json` o caminho para a pasta clonada do repositório.
+
+---
+
+### 2. [Superpowers](https://github.com/obra/superpowers/tree/main/skills)
+Metodologia completa de engenharia para agentes de código composta por 15 skills estruturadas (incluindo TDD estrito, desenvolvimento orientado a subagentes, elaboração e execução de planos, brainstorming e code review).
+
+- **No Antigravity**:
+  ```sh
+  agy plugin install https://github.com/obra/superpowers
+  ```
+- **No Hermes Agent**:
+  ```sh
+  hermes plugins install obra/superpowers --enable
+  # ou instale a pasta skills/ diretamente no diretório ~/.hermes/skills/superpowers
+  ```
+- **Via CLI `skills`**:
+  ```sh
+  npx skills add obra/superpowers --skill '*'
+  ```
+
+---
+
+### 3. [Anthropic Cybersecurity Skills](https://github.com/mukul975/Anthropic-Cybersecurity-Skills)
+A maior biblioteca aberta de skills de segurança cibernética para agentes de IA (818 skills cobrindo 34 domínios de segurança, mapeadas para frameworks como MITRE ATT&CK, NIST CSF 2.0, ATLAS e D3FEND).
+
+- **Via CLI `skills`**:
+  ```sh
+  npx skills add mukul975/Anthropic-Cybersecurity-Skills
+  ```
+- **No Hermes / Antigravity / Codex**:
+  Clone o repositório e aponte a pasta `skills/` no seu diretório global de skills (`~/.hermes/skills/cybersecurity` ou no `skills.json` do Antigravity).
+
+---
+
 ## Uso como padrão
 
 Configure o harness para descobrir e ativar as skills instaladas conforme suas descrições. Para continuidade em projetos, registre também esta preferência nas instruções persistentes do cliente ou do repositório:
