@@ -30,6 +30,14 @@ gemini skills list
 
 Para limitar a instalação ao projeto atual, use `--scope workspace` na raiz do projeto. Em uma sessão aberta, use `/skills reload` e depois `/skills list`. Para orientar o uso por padrão, acrescente a regra da seção **Uso como padrão** ao `GEMINI.md` do projeto (ou a `~/.gemini/GEMINI.md` para todos os projetos do usuário).
 
+Se o comando `gemini` não estiver funcionando no terminal, também é possível copiar as skills para o projeto com o CLI de skills. Na raiz do projeto:
+
+```sh
+npx skills add Leo-alves2/skills --skill sync-session --skill safe-pause -a gemini-cli --copy
+```
+
+Essa opção instala os arquivos; a ativação ainda depende de uma sessão funcional do Gemini CLI.
+
 ## Hermes Agent
 
 No perfil que você usa para desenvolvimento, utilize o [instalador nativo do Hermes](https://hermes-agent.nousresearch.com/docs/user-guide/features/skills#installing-individual-skills-directly-without-adding-a-tap):
