@@ -13,6 +13,7 @@ Este repositório reúne skills no formato aberto [Agent Skills](https://agentsk
 | [skill-authoring](skills/skill-authoring/SKILL.md) | Para criar ou revisar skills no formato Agent Skills. |
 | [skill-installation](skills/skill-installation/SKILL.md) | Para instalar, atualizar ou remover skills em um harness compatível. |
 | [harness-documentation](skills/harness-documentation/SKILL.md) | Para consultar documentação oficial atual sobre modelos, ferramentas e configuração de um harness. |
+| [security-audit](skills/security-audit/SKILL.md) | Orientação de segurança, revisão de vulnerabilidades e auditoria de código, APIs e serviços (Cloudflare). |
 
 As skills de orquestração, computer use, autoria, instalação e consulta de documentação são adaptações portáveis das rotinas utilizadas no harness Codex. Não incluem comandos ou textos específicos de um fornecedor. `safe-pause` e `sync-session` são as skills de continuidade mantidas neste repositório. A skill `orchestrate` é uma reescrita independente, inspirada no caso de uso da [skill de Rafael Quintanilha](https://github.com/rafaelquintanilha/skills/tree/master/skills/orchestrate), que é voltada ao Codex e às ferramentas de colaboração dele.
 
@@ -41,6 +42,7 @@ gemini skills install https://github.com/Leo-alves2/skills.git --path skills/com
 gemini skills install https://github.com/Leo-alves2/skills.git --path skills/skill-authoring --scope user
 gemini skills install https://github.com/Leo-alves2/skills.git --path skills/skill-installation --scope user
 gemini skills install https://github.com/Leo-alves2/skills.git --path skills/harness-documentation --scope user
+gemini skills install https://github.com/Leo-alves2/skills.git --path skills/security-audit --scope user
 gemini skills list
 ```
 
@@ -58,6 +60,7 @@ hermes skills install Leo-alves2/skills/skills/computer-use
 hermes skills install Leo-alves2/skills/skills/skill-authoring
 hermes skills install Leo-alves2/skills/skills/skill-installation
 hermes skills install Leo-alves2/skills/skills/harness-documentation
+hermes skills install Leo-alves2/skills/skills/security-audit
 hermes skills list
 ```
 
@@ -113,6 +116,14 @@ A maior biblioteca aberta de skills de segurança cibernética para agentes de I
   ```
 - **No Hermes / Antigravity / Codex**:
   Clone o repositório e aponte a pasta `skills/` no seu diretório global de skills (`~/.hermes/skills/cybersecurity` ou no `skills.json` do Antigravity).
+
+---
+
+### 4. [Cloudflare Security Audit Skill](https://github.com/cloudflare/security-audit-skill)
+Framework oficial e defensivo da Cloudflare para auditoria de segurança e revisão de vulnerabilidades em código, APIs e infraestrutura. Fornece modos flexíveis de orientação pontual e auditoria completa com geração de relatórios de cobertura e relatórios de achados.
+
+- **Integrada neste repositório**: Disponível diretamente em `skills/security-audit`.
+- **Repositório oficial**: `https://github.com/cloudflare/security-audit-skill`
 
 ---
 
